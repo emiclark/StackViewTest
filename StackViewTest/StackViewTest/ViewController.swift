@@ -17,30 +17,30 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .yellow
         
-        let sq1 = UIView()
-        sq1.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-        sq1.translatesAutoresizingMaskIntoConstraints = false
-        sq1.backgroundColor = .brown
+        let rec1 = UIView()
+        rec1.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        rec1.translatesAutoresizingMaskIntoConstraints = false
+        rec1.backgroundColor = .brown
         
-        let sq2 = UIView()
-        sq2.frame = CGRect(x: 0, y: 0, width: 100, height: 50)
-        sq2.translatesAutoresizingMaskIntoConstraints = false
-        sq2.backgroundColor = .cyan
+        let rec2 = UIView()
+        rec2.frame = CGRect(x: 0, y: 0, width: 100, height: 50)
+        rec2.translatesAutoresizingMaskIntoConstraints = false
+        rec2.backgroundColor = .cyan
         
-        let sq3 = UIView()
-        sq3.frame = CGRect(x: 0, y: 0, width: 100, height: 200)
-        sq3.translatesAutoresizingMaskIntoConstraints = false
-        sq3.backgroundColor = .green
+        let rec3 = UIView()
+        rec3.frame = CGRect(x: 0, y: 0, width: 100, height: 200)
+        rec3.translatesAutoresizingMaskIntoConstraints = false
+        rec3.backgroundColor = .green
 
-        let sq4 = UIView()
-        sq4.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        sq4.translatesAutoresizingMaskIntoConstraints = false
-        sq4.backgroundColor = UIColor.blue
+        let rec4 = UIView()
+        rec4.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        rec4.translatesAutoresizingMaskIntoConstraints = false
+        rec4.backgroundColor = UIColor.blue
         
-        let sq5 = UIView()
-        sq5.frame = CGRect(x: 0, y: 0, width: 250, height: 150)
-        sq5.translatesAutoresizingMaskIntoConstraints = false
-        sq5.backgroundColor = UIColor.red
+        let rec5 = UIView()
+        rec5.frame = CGRect(x: 0, y: 0, width: 250, height: 150)
+        rec5.translatesAutoresizingMaskIntoConstraints = false
+        rec5.backgroundColor = UIColor.red
         
         
         // create stackViews
@@ -52,13 +52,13 @@ class ViewController: UIViewController {
         stackView2.translatesAutoresizingMaskIntoConstraints = false
 
         // add views to stack1
-        stackView1.addArrangedSubview(sq1)
-        stackView1.addArrangedSubview(sq2)
-        stackView1.addArrangedSubview(sq3)
+        stackView1.addArrangedSubview(rec1)
+        stackView1.addArrangedSubview(rec2)
+        stackView1.addArrangedSubview(rec3)
 
         // add views to stackview2
-        stackView2.addArrangedSubview(sq4)
-        stackView2.addArrangedSubview(sq5)
+        stackView2.addArrangedSubview(rec4)
+        stackView2.addArrangedSubview(rec5)
   
         // add stackViews to main view
         view.addSubview(stackView1)
