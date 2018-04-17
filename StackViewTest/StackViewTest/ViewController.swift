@@ -157,9 +157,9 @@ class ViewController: UIViewController {
         // constrain labels
         label1.anchor(top: rec1.topAnchor, leading: rec1.leadingAnchor, trailing: rec1.trailingAnchor, bottom: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         
-        label2.anchor(top: label1.bottomAnchor, leading: rec1.leadingAnchor, trailing: rec1.trailingAnchor, bottom: nil, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
+        label2.anchor(top: label1.bottomAnchor, leading: rec1.leadingAnchor, trailing: rec1.trailingAnchor, bottom: nil, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
         
-        label3.anchor(top: label2.bottomAnchor, leading: rec2.leadingAnchor, trailing: rec2.trailingAnchor, bottom: nil, padding: .init(top: 10, left: 15, bottom: 0, right: 15))
+        label3.anchor(top: label2.bottomAnchor, leading: rec2.leadingAnchor, trailing: rec2.trailingAnchor, bottom: nil, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
     }
 }
 
