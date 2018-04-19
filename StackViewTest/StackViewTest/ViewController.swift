@@ -18,7 +18,7 @@ class ViewController: UIViewController {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .vertical
-        stack.alignment = .top
+        stack.alignment = .fill
         stack.spacing = 5
         stack.distribution = .fill
         return stack
@@ -109,8 +109,7 @@ class ViewController: UIViewController {
         // main view has yellow bkgColor
         view.backgroundColor = .yellow
         setupViews()
-        constrainObjects()
-        setupLabels()
+        setupTheRest()
     }
     
     // MARK:- Setup Methods
@@ -132,18 +131,25 @@ class ViewController: UIViewController {
         // add and configure stack2
         stack2.translatesAutoresizingMaskIntoConstraints = false
         stack2.axis = .horizontal
-        stack2.alignment = .fill
+//        stack2.alignment = .fill
         stack2.spacing = 15
-        stack2.distribution = .fillProportionally
+        stack2.distribution = .equalCentering
     }
     
-    func constrainObjects() {
+    func setupTheRest() {
+        // constrain labels in rect1
+        label1.anchor(top: rect1.topAnchor, leading: rect1.leadingAnchor, trailing: rect1.trailingAnchor, bottom: nil)
+        
+        label2.anchor(top: label1.bottomAnchor, leading: rect1.leadingAnchor, trailing: rect1.trailingAnchor, bottom: nil)
+        
+        label3.anchor(top: label2.bottomAnchor, leading: rect1.leadingAnchor, trailing: rect1.trailingAnchor, bottom: rect1.bottomAnchor)
 
+        
         // set constraints - rect1
-        rect1.anchor(top: stackView1.topAnchor, leading: stackView1.leadingAnchor, trailing: stackView1.trailingAnchor, bottom: label3.bottomAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        rect1.anchor(top: stackView1.topAnchor, leading: stackView1.leadingAnchor, trailing: stackView1.trailingAnchor, bottom: label3.bottomAnchor)
         
         // set constraints - stackview1
-        stackView1.anchor(top: stack2.topAnchor, leading: nil, trailing: nil, bottom: nil )
+        stackView1.anchor(top: stack2.topAnchor, leading: nil, trailing: stack2.trailingAnchor, bottom: nil )
         
         // set constraints - bkView so that stack2 has brown background color
         bkView1.anchor(top: stack2.topAnchor, leading: stack2.leadingAnchor, trailing: stack2.trailingAnchor, bottom: stack2.bottomAnchor)
@@ -153,16 +159,7 @@ class ViewController: UIViewController {
         
         rect2.anchor(top: stack2.topAnchor, leading: stack2.leadingAnchor, trailing: nil, bottom: label4.bottomAnchor)
         
-        stack2.anchor(top: view.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, bottom: nil, padding: .init(top: 50, left: 15, bottom: 0, right: 15))
-    }
-    
-    func setupLabels() {
-        // constrain labels in rect1
-        label1.anchor(top: rect1.topAnchor, leading: rect1.leadingAnchor, trailing: rect1.trailingAnchor, bottom: nil, padding: .init(top: 30, left: 0, bottom: 50, right: 10))
-        
-        label2.anchor(top: label1.bottomAnchor, leading: rect1.leadingAnchor, trailing: rect1.trailingAnchor, bottom: nil, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
-        
-        label3.anchor(top: label2.bottomAnchor, leading: rect1.leadingAnchor, trailing: rect1.trailingAnchor, bottom: rect1.bottomAnchor, padding: .init(top: 20, left: 20, bottom: 0, right: 20))
+        stack2.anchor(top: view.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, bottom: nil, padding: .init(top: 20, left: 10, bottom: 0, right: 10))
     }
 }
 
