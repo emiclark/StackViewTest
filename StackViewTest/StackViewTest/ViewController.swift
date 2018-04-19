@@ -1,4 +1,3 @@
-//
 //  ViewController.swift
 //  StackViewTest
 //
@@ -9,22 +8,20 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
-    //MARK:- Properties
-    var stack2 = UIStackView()
 
-    var stackView1: UIStackView = {
+    //MARK:- Properties
+    var stackView: UIStackView = {
         // create stackView
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .vertical
-        stack.alignment = .fill
+        stack.alignment = .top
         stack.spacing = 5
         stack.distribution = .fill
         return stack
     }()
-    
-    var rect1: UIView = {
+
+    var bkgView: UIView = {
         // create view pinned to stack - so that stack has a bkgcolor of brown
         let rect = UIView()
         rect.translatesAutoresizingMaskIntoConstraints = false
@@ -32,14 +29,6 @@ class ViewController: UIViewController {
         return rect
     }()
 
-    var rect2: UIView = {
-        // create view pinned to stack - so that stack has a bkgcolor of brown
-        let rect = UIView()
-        rect.translatesAutoresizingMaskIntoConstraints = false
-        rect.backgroundColor = .red
-        return rect
-    }()
-    
     var label1: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -52,8 +41,8 @@ class ViewController: UIViewController {
         label.text = "This is a single line"
         return label
     }()
-    
-    
+
+
     var label2: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -80,127 +69,79 @@ class ViewController: UIViewController {
         label.text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
         return label
     }()
-    
-    var label4: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.byWordWrapping
-        label.font = UIFont.boldSystemFont(ofSize: 22)
-        label.backgroundColor = .cyan
-        label.textColor = .darkGray
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.sizeToFit()
-        label.text = "This is a line"
-        return label
-    }()
-    
-    let bkView1: UIView = {
-        // create background view
-        let bkView = UIView()
-        bkView.backgroundColor = UIColor.brown
-        bkView.translatesAutoresizingMaskIntoConstraints = false
-        return bkView
-    }()
-    
+
     // MARK:- View Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // main view has yellow bkgColor
         view.backgroundColor = .yellow
         setupViews()
-        setupTheRest()
+        setupLabels()
+        constrainObjects()
     }
-    
+
     // MARK:- Setup Methods
     func setupViews() {
-        
+
         // add labels to rect1 view
-        rect1.addSubview(label1)
-        rect1.addSubview(label2)
-        rect1.addSubview(label3)
-        rect2.addSubview(label4)
-        
+        bkgView.addSubview(label1)
+        bkgView.addSubview(label2)
+        bkgView.addSubview(label3)
+
         // add remaining views
-        stackView1.addArrangedSubview(rect1)
-        stack2.addArrangedSubview(stackView1)
-        stack2.addArrangedSubview(rect2)
-        bkView1.addSubview(stack2)
-        view.addSubview(bkView1)
+        bkgView.addSubview(stackView)
+        view.addSubview(bkgView)
+    }
+
+    func setupLabels() {
         
-        // add and configure stack2
-        stack2.translatesAutoresizingMaskIntoConstraints = false
-        stack2.axis = .horizontal
-//        stack2.alignment = .fill
-        stack2.spacing = 15
-        stack2.distribution = .equalCentering
+        // constrain 3 labels in stackView
+        label1.anchor(top: stackView.topAnchor, leading: stackView.leadingAnchor, trailing: stackView.trailingAnchor, bottom: nil, padding: .init(top: 40, left: 0, bottom: 0, right: 10))
+        
+        label2.anchor(top: label1.bottomAnchor, leading: stackView.leadingAnchor, trailing: stackView.trailingAnchor, bottom: nil, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
+        
+        label3.anchor(top: label2.bottomAnchor, leading: stackView.leadingAnchor, trailing: stackView.trailingAnchor, bottom: stackView.bottomAnchor, padding: .init(top: 20, left: 20, bottom: 0, right: 20))
     }
     
-    func setupTheRest() {
-        // constrain labels in rect1
-        label1.anchor(top: rect1.topAnchor, leading: rect1.leadingAnchor, trailing: rect1.trailingAnchor, bottom: nil)
-        
-        label2.anchor(top: label1.bottomAnchor, leading: rect1.leadingAnchor, trailing: rect1.trailingAnchor, bottom: nil)
-        
-        label3.anchor(top: label2.bottomAnchor, leading: rect1.leadingAnchor, trailing: rect1.trailingAnchor, bottom: rect1.bottomAnchor)
+    func constrainObjects() {
 
+        // constrain bkgView to view with padding
+        bkgView.anchor(top: view.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, bottom: label3.bottomAnchor, padding: .init(top: 25, left: 0, bottom: 0, right: 0) )
         
-        // set constraints - rect1
-        rect1.anchor(top: stackView1.topAnchor, leading: stackView1.leadingAnchor, trailing: stackView1.trailingAnchor, bottom: label3.bottomAnchor)
-        
-        // set constraints - stackview1
-        stackView1.anchor(top: stack2.topAnchor, leading: nil, trailing: stack2.trailingAnchor, bottom: nil )
-        
-        // set constraints - bkView so that stack2 has brown background color
-        bkView1.anchor(top: stack2.topAnchor, leading: stack2.leadingAnchor, trailing: stack2.trailingAnchor, bottom: stack2.bottomAnchor)
-        
-        // constrain stack2 and subviews
-        label4.anchor(top: rect2.topAnchor, leading: rect2.leadingAnchor, trailing: nil, bottom: nil)
-        
-        rect2.anchor(top: stack2.topAnchor, leading: stack2.leadingAnchor, trailing: nil, bottom: label4.bottomAnchor)
-        
-        stack2.anchor(top: view.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, bottom: nil, padding: .init(top: 20, left: 10, bottom: 0, right: 10))
+        // constrain stackView inside bkgView - so that stackView can have a background color
+        stackView.anchor(top: bkgView.topAnchor, leading: bkgView.leadingAnchor, trailing: bkgView.trailingAnchor, bottom: bkgView.bottomAnchor, padding: .init(top: 10, left: 16, bottom: 0, right: 16))
     }
 }
 
 // MARK:- Extension
 extension UIView {
-    
+    // constrain view with constant width and height
     func anchorSize(height: CGFloat, width: CGFloat) {
         heightAnchor.constraint(equalToConstant: height).isActive = true
         widthAnchor.constraint(equalToConstant: width).isActive = true
     }
-    
+
+    // constrain view with optional padding
     func anchor(top: NSLayoutYAxisAnchor?, leading: NSLayoutXAxisAnchor?, trailing: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, padding: UIEdgeInsets = .zero) {
-        
+
         translatesAutoresizingMaskIntoConstraints = false
-        
+
         if let top = top {
             topAnchor.constraint(equalTo: top, constant: padding.top).isActive = true
         }
-        
+
         if let leading = leading {
             leadingAnchor.constraint(equalTo: leading, constant: padding.left).isActive = true
         }
-        
+
         if let trailing = trailing {
             trailingAnchor.constraint(equalTo: trailing, constant: -padding.right).isActive = true
         }
-        
+
         if let bottom = bottom {
             bottomAnchor.constraint(equalTo: bottom, constant: -padding.bottom).isActive = true
         }
     }
 }
-
-
-//===============
-//        // set constraints - rect1
-//        rect1.anchor(top: stackView1.topAnchor, leading: stackView1.leadingAnchor, trailing: stackView1.trailingAnchor, bottom: label3.bottomAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-//
-//        // set constraints - stackview1
-//        stackView1.anchor(top: bkView1.topAnchor, leading: bkView1.leadingAnchor, trailing: bkView1.trailingAnchor, bottom: rect1.bottomAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0) )
-//
-//        // set constraints - bkView so that stack has brown background color
-//        bkView1.anchor(top: view.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, bottom: stackView1.bottomAnchor, padding: .init(top: 25, left: 16, bottom: 0, right: 16))
 
