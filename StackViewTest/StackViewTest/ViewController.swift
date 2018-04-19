@@ -9,24 +9,47 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    //MARK:- Properties
+    var stack2 = UIStackView()
 
-    var stackView1: UIStackView!
-    var stackView2: UIStackView!
-    var rec1: UIView!
-    var rec2: UIView!
-    var rec3: UIView!
-    var rec4: UIView!
-    var rec5: UIView!
+    var stackView1: UIStackView = {
+        // create stackView
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .vertical
+        stack.alignment = .top
+        stack.spacing = 5
+        stack.distribution = .fill
+        return stack
+    }()
+    
+    var rect1: UIView = {
+        // create view pinned to stack - so that stack has a bkgcolor of brown
+        let rect = UIView()
+        rect.translatesAutoresizingMaskIntoConstraints = false
+        rect.backgroundColor = .purple
+        return rect
+    }()
+
+    var rect2: UIView = {
+        // create view pinned to stack - so that stack has a bkgcolor of brown
+        let rect = UIView()
+        rect.translatesAutoresizingMaskIntoConstraints = false
+        rect.backgroundColor = .red
+        return rect
+    }()
     
     var label1: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
-        label.font = UIFont.boldSystemFont(ofSize: 18)
-        label.backgroundColor = .purple
-        label.textColor = .white
+        label.font = UIFont.boldSystemFont(ofSize: 22)
+        label.backgroundColor = .cyan
+        label.textColor = .darkGray
         label.translatesAutoresizingMaskIntoConstraints = false
         label.sizeToFit()
+        label.text = "This is a single line"
         return label
     }()
     
@@ -40,6 +63,7 @@ class ViewController: UIViewController {
         label.backgroundColor = .cyan
         label.translatesAutoresizingMaskIntoConstraints = false
         label.sizeToFit()
+        label.text = "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old."
         return label
     }()
 
@@ -53,113 +77,92 @@ class ViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.sizeToFit()
         label.textAlignment = .justified
+        label.text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
         return label
+    }()
+    
+    var label4: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.font = UIFont.boldSystemFont(ofSize: 22)
+        label.backgroundColor = .cyan
+        label.textColor = .darkGray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.sizeToFit()
+        label.text = "This is a line"
+        return label
+    }()
+    
+    let bkView1: UIView = {
+        // create background view
+        let bkView = UIView()
+        bkView.backgroundColor = UIColor.brown
+        bkView.translatesAutoresizingMaskIntoConstraints = false
+        return bkView
     }()
     
     // MARK:- View Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // main view has yellow bkgColor
         view.backgroundColor = .yellow
         setupViews()
-        setupStacks()
+        constrainObjects()
         setupLabels()
     }
     
     // MARK:- Setup Methods
     func setupViews() {
-        rec1 = UIView()
-        rec1.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-        rec1.translatesAutoresizingMaskIntoConstraints = false
-        rec1.backgroundColor = .brown
         
-        rec2 = UIView()
-        rec2.frame = CGRect(x: 0, y: 0, width: 100, height: 50)
-        rec2.translatesAutoresizingMaskIntoConstraints = false
-        rec2.backgroundColor = .cyan
+        // add labels to rect1 view
+        rect1.addSubview(label1)
+        rect1.addSubview(label2)
+        rect1.addSubview(label3)
+        rect2.addSubview(label4)
         
-        rec3 = UIView()
-        rec3.frame = CGRect(x: 0, y: 0, width: 100, height: 200)
-        rec3.translatesAutoresizingMaskIntoConstraints = false
-        rec3.backgroundColor = .green
+        // add remaining views
+        stackView1.addArrangedSubview(rect1)
+        stack2.addArrangedSubview(stackView1)
+        stack2.addArrangedSubview(rect2)
+        bkView1.addSubview(stack2)
+        view.addSubview(bkView1)
         
-        rec4 = UIView()
-        rec4.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        rec4.translatesAutoresizingMaskIntoConstraints = false
-        rec4.backgroundColor = UIColor.blue
-        
-        rec5 = UIView()
-        rec5.frame = CGRect(x: 0, y: 0, width: 250, height: 150)
-        rec5.translatesAutoresizingMaskIntoConstraints = false
-        rec5.backgroundColor = UIColor.red
+        // add and configure stack2
+        stack2.translatesAutoresizingMaskIntoConstraints = false
+        stack2.axis = .horizontal
+        stack2.alignment = .fill
+        stack2.spacing = 15
+        stack2.distribution = .fillProportionally
     }
     
-    func setupStacks() {
-        // create stackViews
-        stackView1 = UIStackView()
-        stackView2 = UIStackView()
-        
-        // allow autolayout
-        stackView1.translatesAutoresizingMaskIntoConstraints = false
-        stackView2.translatesAutoresizingMaskIntoConstraints = false
-        
-        // add views to stack1
-        stackView1.addArrangedSubview(rec1)
-        stackView1.addArrangedSubview(rec2)
-        stackView1.addArrangedSubview(rec3)
-        
-        // add views to stackview2
-        stackView2.addArrangedSubview(rec4)
-        stackView2.addArrangedSubview(rec5)
-        
-        // add stackViews to main view
-        view.addSubview(stackView1)
-        view.addSubview(stackView2)
-        
-        // stackview1: set parameters
-        
-        // FIXME: set stackView1 parameter to allow stack to expand as content grows
+    func constrainObjects() {
 
-        stackView1.axis = .vertical
-        stackView1.spacing = 5
-        stackView1.distribution = .fillProportionally
-        stackView1.alignment = .fill
+        // set constraints - rect1
+        rect1.anchor(top: stackView1.topAnchor, leading: stackView1.leadingAnchor, trailing: stackView1.trailingAnchor, bottom: label3.bottomAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         
-        // stackview1: set constraints
-        stackView1.anchor(top: view.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, bottom: nil, padding: .init(top: 80, left: 16, bottom: 16, right: 16))
+        // set constraints - stackview1
+        stackView1.anchor(top: stack2.topAnchor, leading: nil, trailing: nil, bottom: nil )
         
-        // set parameters for stack view 2
-        stackView2.axis = .horizontal
-        stackView2.spacing = 30
-        stackView2.distribution = .fillProportionally
-        stackView2.alignment = .fill
+        // set constraints - bkView so that stack2 has brown background color
+        bkView1.anchor(top: stack2.topAnchor, leading: stack2.leadingAnchor, trailing: stack2.trailingAnchor, bottom: stack2.bottomAnchor)
         
-        // stackview2: set constraints
-        stackView2.anchor(top: stackView1.bottomAnchor, leading: stackView1.leadingAnchor, trailing: stackView1.trailingAnchor, bottom: view.bottomAnchor, padding: .init(top: 20, left: 0, bottom: 20, right: 0))
+        // constrain stack2 and subviews
+        label4.anchor(top: rect2.topAnchor, leading: rect2.leadingAnchor, trailing: nil, bottom: nil)
         
+        rect2.anchor(top: stack2.topAnchor, leading: stack2.leadingAnchor, trailing: nil, bottom: label4.bottomAnchor)
+        
+        stack2.anchor(top: view.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, bottom: nil, padding: .init(top: 50, left: 15, bottom: 0, right: 15))
     }
     
     func setupLabels() {
-        // create labels
-        let label1 = self.label1
-        let label2 = self.label2
-        let label3 = self.label3
-
-        // set label content
-        label1.text = "this is a single line"
-        label2.text = "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old."
-        label3.text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsu"
-
-        // add to view
-        rec1.addSubview(label1)
-        rec1.addSubview(label2)
-        rec1.addSubview(label3)
-
-        // constrain labels
-        label1.anchor(top: rec1.topAnchor, leading: rec1.leadingAnchor, trailing: rec1.trailingAnchor, bottom: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        // constrain labels in rect1
+        label1.anchor(top: rect1.topAnchor, leading: rect1.leadingAnchor, trailing: rect1.trailingAnchor, bottom: nil, padding: .init(top: 30, left: 0, bottom: 50, right: 10))
         
-        label2.anchor(top: label1.bottomAnchor, leading: rec1.leadingAnchor, trailing: rec1.trailingAnchor, bottom: nil, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
+        label2.anchor(top: label1.bottomAnchor, leading: rect1.leadingAnchor, trailing: rect1.trailingAnchor, bottom: nil, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
         
-        label3.anchor(top: label2.bottomAnchor, leading: rec2.leadingAnchor, trailing: rec2.trailingAnchor, bottom: nil, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
+        label3.anchor(top: label2.bottomAnchor, leading: rect1.leadingAnchor, trailing: rect1.trailingAnchor, bottom: rect1.bottomAnchor, padding: .init(top: 20, left: 20, bottom: 0, right: 20))
     }
 }
 
@@ -192,4 +195,15 @@ extension UIView {
         }
     }
 }
+
+
+//===============
+//        // set constraints - rect1
+//        rect1.anchor(top: stackView1.topAnchor, leading: stackView1.leadingAnchor, trailing: stackView1.trailingAnchor, bottom: label3.bottomAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+//
+//        // set constraints - stackview1
+//        stackView1.anchor(top: bkView1.topAnchor, leading: bkView1.leadingAnchor, trailing: bkView1.trailingAnchor, bottom: rect1.bottomAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0) )
+//
+//        // set constraints - bkView so that stack has brown background color
+//        bkView1.anchor(top: view.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, bottom: stackView1.bottomAnchor, padding: .init(top: 25, left: 16, bottom: 0, right: 16))
 
