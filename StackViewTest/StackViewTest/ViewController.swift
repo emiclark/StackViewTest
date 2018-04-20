@@ -38,10 +38,9 @@ class ViewController: UIViewController {
         label.textColor = .darkGray
         label.translatesAutoresizingMaskIntoConstraints = false
         label.sizeToFit()
-        label.text = "This is a single line"
+        label.text = "This is a single line and is inside the stackview."
         return label
     }()
-
 
     var label2: UILabel = {
         let label = UILabel()
@@ -52,7 +51,7 @@ class ViewController: UIViewController {
         label.backgroundColor = .cyan
         label.translatesAutoresizingMaskIntoConstraints = false
         label.sizeToFit()
-        label.text = "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old."
+        label.text = "This paragraph is inside the stackview. Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old."
         return label
     }()
 
@@ -66,10 +65,32 @@ class ViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.sizeToFit()
         label.textAlignment = .justified
-        label.text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
+        label.text = "This paragraph is inside the stackview. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
         return label
     }()
+    
+    var label4: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.backgroundColor = .cyan
+        label.textColor = .blue
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.sizeToFit()
+        label.text = "This line is outside and below the stackview. There's a red line below."
+        return label
+    }()
+    
+    let separator: UIView = {
+        let sep = UIView()
+        sep.backgroundColor = .red
+        sep.translatesAutoresizingMaskIntoConstraints = false
+        return sep
+    }()
 
+    var frameHeight: CGFloat = 0.0
+    
     // MARK:- View Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,34 +109,43 @@ class ViewController: UIViewController {
         bkgView.addSubview(label1)
         bkgView.addSubview(label2)
         bkgView.addSubview(label3)
-
+        
         // add remaining views
         bkgView.addSubview(stackView)
         view.addSubview(bkgView)
+        view.addSubview(label4)
+        view.addSubview(separator)
     }
 
     func setupLabels() {
         
         // constrain 3 labels in stackView
-        label1.anchor(top: stackView.topAnchor, leading: stackView.leadingAnchor, trailing: stackView.trailingAnchor, bottom: nil, padding: .init(top: 40, left: 0, bottom: 0, right: 10))
+        label1.anchor(top: stackView.topAnchor, leading: stackView.leadingAnchor, trailing: stackView.trailingAnchor, bottom: nil, padding: .init(top: 25, left: 0, bottom: 0, right: 10))
         
         label2.anchor(top: label1.bottomAnchor, leading: stackView.leadingAnchor, trailing: stackView.trailingAnchor, bottom: nil, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
         
         label3.anchor(top: label2.bottomAnchor, leading: stackView.leadingAnchor, trailing: stackView.trailingAnchor, bottom: stackView.bottomAnchor, padding: .init(top: 20, left: 20, bottom: 0, right: 20))
+        
+        label4.anchor(top: stackView.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, bottom: nil, padding: .init(top: 8, left: 5, bottom: 0, right: 5))
     }
     
     func constrainObjects() {
 
         // constrain bkgView to view with padding
-        bkgView.anchor(top: view.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, bottom: label3.bottomAnchor, padding: .init(top: 25, left: 0, bottom: 0, right: 0) )
+        bkgView.anchor(top: view.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, bottom: label3.bottomAnchor, padding: .init(top: 25, left: 10, bottom: 0, right: 10) )
         
         // constrain stackView inside bkgView - so that stackView can have a background color
         stackView.anchor(top: bkgView.topAnchor, leading: bkgView.leadingAnchor, trailing: bkgView.trailingAnchor, bottom: bkgView.bottomAnchor, padding: .init(top: 10, left: 16, bottom: 0, right: 16))
+        
+        // add separator line
+        separator.anchorSize(height: 1, width: view.frame.size.width)
+        separator.anchor(top: label4.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, bottom: nil, padding: .init(top: 8, left: 0, bottom: 0, right: 0))
     }
 }
 
 // MARK:- Extension
 extension UIView {
+    
     // constrain view with constant width and height
     func anchorSize(height: CGFloat, width: CGFloat) {
         heightAnchor.constraint(equalToConstant: height).isActive = true
